@@ -22,6 +22,8 @@ app.get("/api/stock/:symbol", async (req, res) => {
         const response = await fetch(url);
         const data = await response.json();
 
+        console.log(data); // 👈 ADD THIS
+
         res.json(data);
     } catch (error) {
         res.status(500).json({ error: "Server Error" });
