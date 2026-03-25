@@ -5,9 +5,15 @@ import fetch from "node-fetch";
 const app = express();
 app.use(cors());
 
-const API_KEY = "TKU77K5C5YS98CF3";
+const PORT = process.env.PORT || 5000;
+const API_KEY = process.env.API_KEY;
 
-// 📊 API Route
+// Root route
+app.get("/", (req, res) => {
+    res.send("🚀 Stock Backend is Running");
+});
+
+// Stock API
 app.get("/api/stock/:symbol", async (req, res) => {
     try {
         const symbol = req.params.symbol;
@@ -17,9 +23,11 @@ app.get("/api/stock/:symbol", async (req, res) => {
         const data = await response.json();
 
         res.json(data);
-    } catch (err) {
-        res.status(500).json({ error: "Server error" });
+    } catch (error) {
+        res.status(500).json({ error: "Server Error" });
     }
 });
 
-app.listen(5000, () => console.log("🚀 Backend running on port 5000"));
+app.listen(PORT, () => {
+    console.log(`🚀 Backend running on port ${PORT}`);
+});
